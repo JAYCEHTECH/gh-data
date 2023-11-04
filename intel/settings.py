@@ -30,8 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'ghdatahub-2pcgz.ondigitalocean.app',
-    'www.ghdatahubs.com'
+    'gh-data-lvhew.ondigitalocean.app',
+    'www.ghdata.store'
 ]
 
 
