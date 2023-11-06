@@ -248,8 +248,9 @@ def mtn_pay_with_wallet(request):
         new_mtn_transaction.save()
         user.wallet -= float(amount)
         user.save()
+        admin = models.AdminInfo.objects.filter().first().phone_number
         sms_body = {
-            'recipient': "233248222860",
+            'recipient': f"233{admin}",
             'sender_id': 'GH DATA',
             'message': sms_message
         }
@@ -297,9 +298,9 @@ def mtn(request):
 
         sms_url = 'https://webapp.usmsgh.com/api/sms/send'
         sms_message = f"An order has been placed. {bundle}MB for {phone_number}"
-
+        admin = models.AdminInfo.objects.filter().first().phone_number
         sms_body = {
-            'recipient': "233248222860",
+            'recipient': f"233{admin}",
             'sender_id': 'GH DATA',
             'message': sms_message
         }
