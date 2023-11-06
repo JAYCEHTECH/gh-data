@@ -383,25 +383,122 @@ def mark_as_sent(request, pk):
 
 
 def credit_user(request):
-    form = forms.CreditUserForm()
+    if request.user.is_superuser:
+        form = forms.CreditUserForm()
+        if request.method == "POST":
+            form = forms.CreditUserForm(request.POST)
+            if form.is_valid():
+                user = form.cleaned_data["user"]
+                amount = form.cleaned_data["amount"]
+                print(user)
+                print(amount)
+                user_needed = models.CustomUser.objects.get(username=user)
+                if user_needed.wallet is None:
+                    user_needed.wallet = float(amount)
+                else:
+                    user_needed.wallet += float(amount)
+                user_needed.save()
+                print(user_needed.username)
+                messages.success(request, "Crediting Successful")
+                return redirect('credit_user')
+        context = {'form': form}
+        return render(request, "layouts/services/credit.html", context=context)
+    else:
+        messages.error(request, "Access Denied")
+        return redirect('home')
+
+
+@login_required(login_url='login')
+def topup_info(request):
     if request.method == "POST":
-        form = forms.CreditUserForm(request.POST)
-        if form.is_valid():
-            user = form.cleaned_data["user"]
-            amount = form.cleaned_data["amount"]
-            print(user)
-            print(amount)
-            user_needed = models.CustomUser.objects.get(username=user)
-            if user_needed.wallet is None:
-                user_needed.wallet = float(amount)
-            else:
-                user_needed.wallet += float(amount)
-            user_needed.save()
-            print(user_needed.username)
-            messages.success(request, "Crediting Successful")
-            return redirect('credit_user')
-    context = {'form': form}
-    return render(request, "layouts/services/credit.html", context=context)
+        admin = models.AdminInfo.objects.filter().first().phone_number
+        user = models.CustomUser.objects.get(id=request.user.id)
+        amount = request.POST.get("amount")
+        print(amount)
+        reference = helper.top_up_ref_generator()
+        new_topup_request = models.TopUpRequest.objects.create(
+            user=request.user,
+            amount=amount,
+            reference=reference,
+        )
+        new_topup_request.save()
+
+        sms_headers = {
+            'Authorization': 'Bearer Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
+            'Content-Type': 'application/json'
+        }
+
+        sms_url = 'https://webapp.usmsgh.com/api/sms/send'
+        sms_message = f"A top up request has been placed.\nGHS{amount} for {user}.\nReference: {reference}"
+
+        sms_body = {
+            'recipient': f"233{admin}",
+            'sender_id': 'GH DATA',
+            'message': sms_message
+        }
+        response = requests.request('POST', url=sms_url, params=sms_body, headers=sms_headers)
+        print(response.text)
+        messages.success(request, f"Your Request has been sent successfully. Kindly go on to pay to {admin} and use the reference stated as reference. Reference: {reference}")
+        return redirect("request_successful", reference)
+    return render(request, "layouts/topup-info.html")
+
+
+@login_required(login_url='login')
+def request_successful(request, reference):
+    admin = models.AdminInfo.objects.filter().first()
+    context = {
+        "name": admin.name,
+        "number": f"0{admin.momo_number}",
+        "channel": admin.payment_channel,
+        "reference": reference
+    }
+    return render(request, "layouts/services/request_successful.html", context=context)
+
+
+def topup_list(request):
+    if request.user.is_superuser:
+        topup_requests = models.TopUpRequest.objects.all().order_by('date').reverse()
+        context = {
+            'requests': topup_requests,
+        }
+        return render(request, "layouts/services/topup_list.html", context=context)
+    else:
+        messages.error(request, "Access Denied")
+        return redirect('home')
+
+
+@login_required(login_url='login')
+def credit_user_from_list(request, reference):
+    if request.user.is_superuser:
+        crediting = models.TopUpRequest.objects.filter(reference=reference).first()
+        user = crediting.user
+        custom_user = models.CustomUser.objects.get(username=user.username)
+        amount = crediting.amount
+        print(user)
+        print(user.phone)
+        print(amount)
+        custom_user.wallet += amount
+        custom_user.save()
+        sms_headers = {
+            'Authorization': 'Bearer Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
+            'Content-Type': 'application/json'
+        }
+
+        sms_url = 'https://webapp.usmsgh.com/api/sms/send'
+        sms_message = f"Hello,\nYour wallet has been topped up with GHS{amount}.\nReference: {reference}.\nThank you"
+
+        sms_body = {
+            'recipient': f"233{custom_user.phone}",
+            'sender_id': 'GH DATA',
+            'message': sms_message
+        }
+        response = requests.request('POST', url=sms_url, params=sms_body, headers=sms_headers)
+        print(response.text)
+        crediting.status = True
+        crediting.credited_at = datetime.now()
+        crediting.save()
+        messages.success(request, f"{user} has been credited with {amount}")
+        return redirect('topup_list')
 
 
 
