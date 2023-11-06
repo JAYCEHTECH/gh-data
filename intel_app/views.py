@@ -424,7 +424,7 @@ def topup_info(request):
         new_topup_request.save()
 
         sms_headers = {
-            'Authorization': 'Bearer Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
+            'Authorization': 'Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
             'Content-Type': 'application/json'
         }
 
@@ -480,7 +480,7 @@ def credit_user_from_list(request, reference):
         custom_user.wallet += amount
         custom_user.save()
         sms_headers = {
-            'Authorization': 'Bearer Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
+            'Authorization': 'Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
             'Content-Type': 'application/json'
         }
 
