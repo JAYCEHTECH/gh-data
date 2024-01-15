@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(blank=True, max_length=250, null=True)),
                 ('phone_number', models.BigIntegerField(blank=True, null=True)),
                 ('momo_number', models.PositiveBigIntegerField(blank=True, null=True)),
+                ('name', models.CharField(blank=True, max_length=250, null=True)),
                 ('email', models.EmailField(blank=True, max_length=254, null=True)),
             ],
         ),
