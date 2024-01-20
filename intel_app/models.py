@@ -159,8 +159,29 @@ class AFARegistration(models.Model):
     phone_number = models.BigIntegerField(null=False, blank=False)
     gh_card_number = models.CharField(null=False, blank=False, max_length=256)
     name = models.CharField(max_length=250, null=False, blank=False)
-    occupation = models.CharField(max_length=20, null=False, blank=True)
-    reference = models.CharField(max_length=20, null=False, blank=True)
+    occupation = models.CharField(max_length=200, null=False, blank=True)
+    reference = models.CharField(max_length=200, null=False, blank=True)
+    location = models.CharField(max_length=20, null=False, blank=True)
+    ghana_regions = (
+        ('Ashanti Region', 'Ashanti Region'),
+        ('Brong-Ahafo Region', 'Brong-Ahafo Region'),
+        ('Central Region', 'Central Region'),
+        ('Eastern Region', 'Eastern Region'),
+        ('Greater Accra Region', 'Greater Accra Region'),
+        ('Northern Region', 'Northern Region'),
+        ('Oti Region', 'Oti Region'),
+        ('Upper East Region', 'Upper East Region'),
+        ('Upper West Region', 'Upper West Region'),
+        ('Volta Region', 'Volta Region'),
+        ('Western Region', 'Western Region'),
+        ('Ahafo Region', 'Ahafo Region'),
+        ('Bono Region', 'Bono Region'),
+        ('Bono East Region', 'Bono East Region'),
+        ('North East Region', 'North East Region'),
+        ('Savannah Region', 'Savannah Region')
+    )
+
+    region = models.CharField(max_length=20, null=False, blank=True, choices=ghana_regions)
     date_of_birth = models.DateField(null=False, blank=False)
     choices = (
         ("Pending", "Pending"),

@@ -59,6 +59,29 @@ class AFARegistrationForm(forms.ModelForm):
         widget=forms.NumberInput(attrs={'class': 'form-control phone', 'placeholder': '0240000000'}))
     gh_card_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control card', 'placeholder': 'GHA-XXXXXXXXXXX-X'}))
     occupation = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control occ'}))
+    location = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control loc'}))
+    ghana_regions = (
+        ('Ashanti Region', 'Ashanti Region'),
+        ('Brong-Ahafo Region', 'Brong-Ahafo Region'),
+        ('Central Region', 'Central Region'),
+        ('Eastern Region', 'Eastern Region'),
+        ('Greater Accra Region', 'Greater Accra Region'),
+        ('Northern Region', 'Northern Region'),
+        ('Oti Region', 'Oti Region'),
+        ('Upper East Region', 'Upper East Region'),
+        ('Upper West Region', 'Upper West Region'),
+        ('Volta Region', 'Volta Region'),
+        ('Western Region', 'Western Region'),
+        ('Ahafo Region', 'Ahafo Region'),
+        ('Bono Region', 'Bono Region'),
+        ('Bono East Region', 'Bono East Region'),
+        ('North East Region', 'North East Region'),
+        ('Savannah Region', 'Savannah Region')
+    )
+    region = forms.CharField(
+        label='Select Region',
+        widget=forms.Select(choices=ghana_regions, attrs={'class': 'form-control region'})
+    )
     date_of_birth = forms.CharField(
         widget=forms.DateInput(attrs={'class': 'form-control birth', 'type': 'date'}))
 

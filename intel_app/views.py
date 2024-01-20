@@ -537,6 +537,8 @@ def afa_registration_wallet(request):
         card_number = request.POST.get("card")
         occupation = request.POST.get("occupation")
         date_of_birth = request.POST.get("birth")
+        region = request.POST.get("region")
+        location = request.POST.get("location")
         price = models.AdminInfo.objects.filter().first().afa_price
 
         if user.wallet is None:
@@ -553,7 +555,9 @@ def afa_registration_wallet(request):
             phone_number=phone_number,
             gh_card_number=card_number,
             occupation=occupation,
-            date_of_birth=date_of_birth
+            date_of_birth=date_of_birth,
+            region=region,
+            location=location
         )
         new_registration.save()
         user.wallet -= float(price)
