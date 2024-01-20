@@ -87,7 +87,7 @@ class AFARegistrationForm(forms.ModelForm):
 
     class Meta:
         model = models.AFARegistration
-        fields = ('name', 'phone_number', 'gh_card_number', 'occupation', 'date_of_birth')
+        fields = ('name', 'phone_number', 'gh_card_number', 'occupation', 'date_of_birth', 'region', 'location')
 
 
 class VodaBundleForm(forms.Form):
