@@ -191,6 +191,8 @@ $("body").on('click', '.pay-with-wallet', function(e){
     let card = $(".card").val()
     let birth = $(".birth").val()
     let occupation = $(".occ").val()
+    let location = $(".loc").val()
+    let region = $(".region").val()
 
     $.ajax({
       method: "POST",
@@ -202,6 +204,8 @@ $("body").on('click', '.pay-with-wallet', function(e){
             name: name,
             card: card,
             birth: birth,
+          location: location,
+        region: region,
             occupation: occupation,
             csrfmiddlewaretoken: token,
       },
