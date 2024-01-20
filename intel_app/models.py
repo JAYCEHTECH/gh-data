@@ -161,7 +161,7 @@ class AFARegistration(models.Model):
     name = models.CharField(max_length=250, null=False, blank=False)
     occupation = models.CharField(max_length=200, null=False, blank=True)
     reference = models.CharField(max_length=200, null=False, blank=True)
-    location = models.CharField(max_length=20, null=False, blank=True)
+    location = models.CharField(max_length=20, null=True, blank=True)
     ghana_regions = (
         ('Ashanti Region', 'Ashanti Region'),
         ('Brong-Ahafo Region', 'Brong-Ahafo Region'),
@@ -181,7 +181,7 @@ class AFARegistration(models.Model):
         ('Savannah Region', 'Savannah Region')
     )
 
-    region = models.CharField(max_length=20, null=False, blank=True, choices=ghana_regions)
+    region = models.CharField(max_length=20, null=True, blank=True, choices=ghana_regions)
     date_of_birth = models.DateField(null=False, blank=False)
     choices = (
         ("Pending", "Pending"),
