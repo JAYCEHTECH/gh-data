@@ -199,22 +199,21 @@ $("body").on('click', '.pay-with-wallet', function(e){
       url: "/afa_pay_with_wallet/",
       data: {
         phone: phonenumber,
-            amount: 5,
-            reference: ref,
-            name: name,
-            card: card,
-            birth: birth,
-          location: location,
+        amount: 5,
+        reference: ref,
+        name: name,
+        card: card,
+        birth: birth,
+        location: location,
         region: region,
-            occupation: occupation,
-            csrfmiddlewaretoken: token,
+        occupation: occupation,
+        csrfmiddlewaretoken: token,
       },
-      success: function (response) {
-        console.log(response.status)
-        Swal.fire({text: response.status, confirmButtonText:"Okay"}).then((value) => {
+      success: function(response){
+            Swal.fire({text: response.status, icon:response.icon, confirmButtonText:"Okay"}).then((value) => {
               location.reload()
             })
-      },
+          }
     });
   })
 </script>
