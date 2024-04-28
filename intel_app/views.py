@@ -812,9 +812,10 @@ def paystack_webhook(request):
                         transaction_status="Completed"
                     )
                     new_payment.save()
-
+                    print(user.wallet)
                     user.wallet += float(topup_amount)
                     user.save()
+                    print(user.wallet)
 
                     new_topup = models.TopUpRequest.objects.create(
                         user=user,
