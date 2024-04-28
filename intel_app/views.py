@@ -999,8 +999,8 @@ def query_txn(request):
         print(reference)
 
         headers = {
-            "api-key": "U1511LRCFW8PQG$FEAKU9GB$O0APF6TB",
-            "api-secret": "NJY2MRY2Z8-3DJKD560M2Q$3$-MTVVD798YW3ES5ZT5O5DEVJX8ZPYQRFSIY4-CF"
+            "api-key": config("API_KEY"),
+            "api-secret": config("API_SECRET"),
         }
         response = requests.post(url=f"https://console.bestpaygh.com/api/flexi/v1/transaction_detail/{reference.strip()}/", headers=headers)
         data = response.json()
