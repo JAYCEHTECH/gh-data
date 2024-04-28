@@ -897,35 +897,6 @@ def paystack_webhook(request):
                     )
                     new_mtn_transaction.save()
                     return HttpResponse(status=200)
-                # elif channel == "big-time":
-                #     new_payment = models.Payment.objects.create(
-                #         user=user,
-                #         reference=reference,
-                #         amount=paid_amount,
-                #         transaction_date=datetime.now(),
-                #         transaction_status="Pending"
-                #     )
-                #     new_payment.save()
-                #
-                #     if user.status == "User":
-                #         bundle = models.BigTimeBundlePrice.objects.get(price=float(real_amount)).bundle_volume
-                #     elif user.status == "Agent":
-                #         bundle = models.AgentBigTimeBundlePrice.objects.get(price=float(real_amount)).bundle_volume
-                #     elif user.status == "Super Agent":
-                #         bundle = models.SuperAgentBigTimeBundlePrice.objects.get(price=float(real_amount)).bundle_volume
-                #     else:
-                #         bundle = models.BigTimeBundlePrice.objects.get(price=float(real_amount)).bundle_volume
-                #
-                #     print(receiver)
-                #
-                #     new_transaction = models.BigTimeTransaction.objects.create(
-                #         user=user,
-                #         bundle_number=receiver,
-                #         offer=f"{bundle}MB",
-                #         reference=reference,
-                #     )
-                #     new_transaction.save()
-                #     return HttpResponse(status=200)
                 elif channel == "topup":
                     topup_amount = metadata.get('real_amount')
 
