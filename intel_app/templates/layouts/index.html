@@ -17,7 +17,7 @@
           <div class="col-lg-6 py-3 wow zoomIn">
             {% if request.user.is_authenticated %}
                 <div class="card border shadow p-3" style="background-image: linear-gradient(to right bottom, #ffffff, #ffffff, #6C55F9);">
-                  <span class="text-primary">Hi {{request.user.first_name}}</span>,<br>Transact with E-Wallet Seamlessly.
+                  <span class="text-primary">Hi {{request.user.first_name}},</span><br>Transact with E-Wallet Seamlessly.
                   <p>E-Wallet Balance:</p>
                   <h3 class="text-primary">GHS {{wallet_balance}}</h3>
                   <i>Low on Balance?</i>
