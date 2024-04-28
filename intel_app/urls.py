@@ -35,6 +35,7 @@ urlpatterns = [
     path("request_successful/<str:reference>", views.request_successful, name='request_successful'),
     path('elevated/topup-list', views.topup_list, name="topup_list"),
     path('credit/<str:reference>', views.credit_user_from_list, name='credit'),
+    path('paystack_webhook', views.paystack_webhook, name='paystack_webhook'),
 
     path('login', authViews.login_page, name='login'),
     path('signup', authViews.sign_up, name='signup'),
