@@ -18,6 +18,12 @@ urlpatterns = [
     path('history/afa', views.afa_history, name="afa-history"),
     path('verify_transaction/<str:reference>/', views.verify_transaction, name="verify_transaction"),
 
+    path('history/big_time', views.big_time_history, name="bt-history"),
+    path('services/big_time/', views.big_time, name='big_time'),
+    path('bt_admin', views.admin_bt_history, name='bt_admin'),
+    path('bt_mark_as_sent/<int:pk>', views.bt_mark_as_sent, name='bt_mark_as_sent'),
+    path('big_time_pay_with_wallet/', views.big_time_pay_with_wallet, name='big_time_pay_with_wallet'),
+
     path('mtn_admin', views.admin_mtn_history, name='mtn_admin'),
     path('afa_admin', views.admin_afa_history, name='afa_admin'),
     path('voda_admin', views.admin_voda_history, name='voda_admin'),
@@ -36,6 +42,9 @@ urlpatterns = [
     path('elevated/topup-list', views.topup_list, name="topup_list"),
     path('credit/<str:reference>', views.credit_user_from_list, name='credit'),
     path('paystack_webhook', views.paystack_webhook, name='paystack_webhook'),
+    path("password_reset/", views.password_reset_request, name="password_reset"),
+
+    path('query_transaction', views.query_txn, name='query_txn'),
 
     path('login', authViews.login_page, name='login'),
     path('signup', authViews.sign_up, name='signup'),

@@ -19,6 +19,9 @@
           <li class="nav-item">
             <a href="{% url 'history' %}" class="nav-link">Dashboard</a>
           </li>
+          <li class="nav-item">
+            <a href="{% url 'query_txn' %}" class="nav-link">Query Transaction</a>
+          </li>
           {% if request.user.is_superuser %}
           <li class="nav-item">
             <a href="{% url 'topup_list' %}" class="nav-link">Requests</a>
@@ -50,6 +53,7 @@
               {% if request.user.is_superuser %}
                 <a class="dropdown-item" href="{% url 'mtn_admin' %}">MTN Admin</a>
               <a class="dropdown-item" href="{% url 'voda_admin' %}">Voda Admin</a>
+              <a class="dropdown-item" href="{% url 'bt_admin' %}">Big Time Admin</a>
               <a class="dropdown-item" href="{% url 'afa_admin' %}">AFA Admin</a>
               {% endif %}
             </div>

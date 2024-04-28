@@ -47,6 +47,23 @@ class MTNForm(forms.Form):
         # self.fields['size'].queryset = models.Size.objects.filter(domain=domain)
 
 
+class BigTimeBundleForm(forms.Form):
+    phone_number = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'class': 'form-control phone', 'placeholder': '0270000000'}))
+    offers = forms.ModelChoiceField(queryset=models.BigTimeBundlePrice.objects.all().order_by('price'),
+                                    to_field_name='price', empty_label=None,
+                                    widget=forms.Select(attrs={'class': 'form-control airtime-input'}))
+
+    def __init__(self, status, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if status == "User":
+            self.fields['offers'].queryset = models.BigTimeBundlePrice.objects.all()
+        elif status == "Agent":
+            self.fields['offers'].queryset = models.AgentBigTimeBundlePrice.objects.all()
+        # self.fields['size'].queryset = models.Size.objects.filter(domain=domain)
+
+
+
 class CreditUserForm(forms.Form):
     user = forms.ModelChoiceField(queryset=models.CustomUser.objects.all().order_by('username'), to_field_name='username', empty_label=None,
                                   widget=forms.Select(attrs={'class': 'form-control airtime-input'}))
