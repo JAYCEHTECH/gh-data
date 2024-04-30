@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from . import models
+from import_export.admin import ExportActionMixin
 
 
 # Register your models here.
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(ExportActionMixin, UserAdmin):
     list_display = ['first_name', 'last_name', 'username', 'email', 'wallet', 'phone']
 
     fieldsets = (
