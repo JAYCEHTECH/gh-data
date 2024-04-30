@@ -37,7 +37,7 @@ class MTNTransactionAdmin(admin.ModelAdmin):
 
 
 class BigTimeTransactionAdmin(admin.ModelAdmin):
-    list_display = ['user', 'phone_number', 'gh_card_number', 'name', 'occupation', 'location']
+    list_display = ['user', 'bundle_number', 'offer', 'reference', 'transaction_status', 'transaction_date']
     search_fields = ['reference', 'bundle_number']
 
 
@@ -47,8 +47,7 @@ class VodafoneTransactionAdmin(admin.ModelAdmin):
 
 
 class AFARegistrationAdmin(admin.ModelAdmin):
-    list_display = ['user', 'bundle_number', 'offer', 'reference', 'transaction_status', 'transaction_date']
-    search_fields = ['reference', 'bundle_number']
+    list_display = ['user', 'phone_number', 'gh_card_number', 'name', 'occupation', 'location']
 
 
 class PaymentAdmin(admin.ModelAdmin):
