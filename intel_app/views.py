@@ -75,6 +75,7 @@ def pay_with_wallet(request):
                 )
                 new_transaction.save()
                 user.wallet -= float(amount)
+                user.wallet = round(user.wallet, 2)
                 user.save()
                 receiver_message = f"Your bundle purchase has been completed successfully. {bundle}MB has been credited to you by {request.user.phone}.\nReference: {reference}\n"
                 sms_message = f"Hello @{request.user.username}. Your bundle purchase has been completed successfully. {bundle}MB has been credited to {phone_number}.\nReference: {reference}\nCurrent Wallet Balance: {user.wallet}\nThank you for using GH Data.\n\nGH Data"
@@ -274,6 +275,7 @@ def mtn_pay_with_wallet(request):
         )
         new_mtn_transaction.save()
         user.wallet -= float(amount)
+        user.wallet = round(user.wallet, 2)
         user.save()
         admin = models.AdminInfo.objects.filter().first().phone_number
         sms_body = {
@@ -370,6 +372,7 @@ def big_time_pay_with_wallet(request):
         )
         new_mtn_transaction.save()
         user.wallet -= float(amount)
+        user.wallet = round(user.wallet, 2)
         user.save()
         return JsonResponse({'status': "Your transaction will be completed shortly", 'icon': 'success'})
     return redirect('big_time')
@@ -731,6 +734,7 @@ def afa_registration_wallet(request):
         )
         new_registration.save()
         user.wallet -= float(price)
+        user.wallet = round(user.wallet, 2)
         user.save()
         return JsonResponse({'status': "Your transaction will be completed shortly", 'icon': 'success'})
     return redirect('home')
@@ -882,6 +886,7 @@ def voda_pay_with_wallet(request):
         )
         new_mtn_transaction.save()
         user.wallet -= float(amount)
+        user.wallet = round(user.wallet, 2)
         user.save()
         return JsonResponse({'status': "Your transaction will be completed shortly", 'icon': 'success'})
     return redirect('voda')
@@ -956,6 +961,7 @@ def paystack_webhook(request):
                     new_payment.save()
                     print(user.wallet)
                     user.wallet += float(topup_amount)
+                    user.wallet = round(user.wallet, 2)
                     user.save()
                     print(user.wallet)
 
