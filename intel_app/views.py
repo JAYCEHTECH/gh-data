@@ -518,7 +518,7 @@ def verify_transaction(request, reference):
 @login_required(login_url='login')
 def admin_mtn_history(request):
     if request.user.is_staff and request.user.is_superuser:
-        all_txns = models.MTNTransaction.objects.all()
+        all_txns = models.MTNTransaction.objects.all()[:1000]
         context = {'txns': all_txns}
         return render(request, "layouts/services/mtn_admin.html", context=context)
 
@@ -751,7 +751,7 @@ def afa_history(request):
 @login_required(login_url='login')
 def admin_afa_history(request):
     if request.user.is_staff and request.user.is_superuser:
-        all_txns = models.AFARegistration.objects.filter().order_by('-transaction_date')
+        all_txns = models.AFARegistration.objects.filter().order_by('-transaction_date')[:1000]
         context = {'txns': all_txns}
         return render(request, "layouts/services/afa_admin.html", context=context)
 
@@ -905,7 +905,7 @@ def voda_history(request):
 @login_required(login_url='login')
 def admin_voda_history(request):
     if request.user.is_staff and request.user.is_superuser:
-        all_txns = models.VodafoneTransaction.objects.filter().order_by('-transaction_date')
+        all_txns = models.VodafoneTransaction.objects.filter().order_by('-transaction_date')[:1000]
         context = {'txns': all_txns}
         return render(request, "layouts/services/voda_admin.html", context=context)
 
