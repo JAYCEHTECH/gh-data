@@ -66,6 +66,7 @@ class BigTimeTransaction(models.Model):
     choices = (
         ("Pending", "Pending"),
         ("Completed", "Completed"),
+        ("Processing", "Processing"),
         ("Failed", "Failed")
     )
     transaction_status = models.CharField(max_length=100, choices=choices, default="Pending")
@@ -117,6 +118,7 @@ class MTNTransaction(models.Model):
     choices = (
         ("Pending", "Pending"),
         ("Completed", "Completed"),
+        ("Processing", "Processing"),
         ("Failed", "Failed")
     )
     transaction_status = models.CharField(max_length=100, choices=choices, default="Pending")
@@ -224,6 +226,7 @@ class AFARegistration(models.Model):
     choices = (
         ("Pending", "Pending"),
         ("Completed", "Completed"),
+        ("Processing", "Processing"),
         ("Failed", "Failed")
     )
     transaction_status = models.CharField(max_length=100, choices=choices, default="Pending")
@@ -242,6 +245,7 @@ class VodafoneTransaction(models.Model):
     choices = (
         ("Pending", "Pending"),
         ("Completed", "Completed"),
+        ("Processing", "Processing"),
         ("Failed", "Failed")
     )
     transaction_status = models.CharField(max_length=100, choices=choices, default="Pending")
