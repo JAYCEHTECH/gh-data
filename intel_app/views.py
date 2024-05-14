@@ -949,49 +949,52 @@ def paystack_webhook(request):
                 reference = r_data.get('reference')
 
                 if channel == "topup":
-                    topup_amount = metadata.get('real_amount')
-
-                    new_payment = models.Payment.objects.create(
-                        user=user,
-                        reference=reference,
-                        amount=paid_amount,
-                        transaction_date=datetime.now(),
-                        transaction_status="Completed"
-                    )
-                    new_payment.save()
-                    print(user.wallet)
-                    user.wallet += float(topup_amount)
-                    user.save()
-                    print(user.wallet)
-
-                    if models.TopUpRequest.objects.filter(user=user, reference=reference, status=True).exists():
-                        return HttpResponse(status=200)
-
-                    new_topup = models.TopUpRequest.objects.create(
-                        user=user,
-                        reference=reference,
-                        amount=topup_amount,
-                        status=True,
-                    )
-                    new_topup.save()
-
-                    sms_headers = {
-                        'Authorization': 'Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
-                        'Content-Type': 'application/json'
-                    }
-
-                    sms_url = 'https://webapp.usmsgh.com/api/sms/send'
-                    sms_message = f"Your GH Data wallet has been credited with GHS{topup_amount}.\nReference: {reference}\n"
-
-                    sms_body = {
-                        'recipient': f"233{user.phone}",
-                        'sender_id': 'GH DATA',
-                        'message': sms_message
-                    }
                     try:
-                        response = requests.request('POST', url=sms_url, params=sms_body, headers=sms_headers)
-                        print(response.text)
-                        return HttpResponse(status=200)
+                        topup_amount = metadata.get('real_amount')
+
+                        new_payment = models.Payment.objects.create(
+                            user=user,
+                            reference=reference,
+                            amount=paid_amount,
+                            transaction_date=datetime.now(),
+                            transaction_status="Completed"
+                        )
+                        new_payment.save()
+                        print(user.wallet)
+                        user.wallet += float(topup_amount)
+                        user.save()
+                        print(user.wallet)
+
+                        if models.TopUpRequest.objects.filter(user=user, reference=reference, status=True).exists():
+                            return HttpResponse(status=200)
+
+                        new_topup = models.TopUpRequest.objects.create(
+                            user=user,
+                            reference=reference,
+                            amount=topup_amount,
+                            status=True,
+                        )
+                        new_topup.save()
+
+                        sms_headers = {
+                            'Authorization': 'Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
+                            'Content-Type': 'application/json'
+                        }
+
+                        sms_url = 'https://webapp.usmsgh.com/api/sms/send'
+                        sms_message = f"Your GH Data wallet has been credited with GHS{topup_amount}.\nReference: {reference}\n"
+
+                        sms_body = {
+                            'recipient': f"233{user.phone}",
+                            'sender_id': 'GH DATA',
+                            'message': sms_message
+                        }
+                        try:
+                            response = requests.request('POST', url=sms_url, params=sms_body, headers=sms_headers)
+                            print(response.text)
+                            return HttpResponse(status=200)
+                        except:
+                            return HttpResponse(status=200)
                     except:
                         return HttpResponse(status=200)
                 else:
