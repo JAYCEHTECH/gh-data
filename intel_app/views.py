@@ -961,9 +961,11 @@ def paystack_webhook(request):
                     new_payment.save()
                     print(user.wallet)
                     user.wallet += float(topup_amount)
-                    user.wallet = round(user.wallet, 2)
                     user.save()
                     print(user.wallet)
+
+                    if models.TopUpRequest.objects.filter(user=user, reference=reference, status=True).exists():
+                        return HttpResponse(status=200)
 
                     new_topup = models.TopUpRequest.objects.create(
                         user=user,
@@ -986,9 +988,12 @@ def paystack_webhook(request):
                         'sender_id': 'GH DATA',
                         'message': sms_message
                     }
-                    response = requests.request('POST', url=sms_url, params=sms_body, headers=sms_headers)
-                    print(response.text)
-                    return HttpResponse(status=200)
+                    try:
+                        response = requests.request('POST', url=sms_url, params=sms_body, headers=sms_headers)
+                        print(response.text)
+                        return HttpResponse(status=200)
+                    except:
+                        return HttpResponse(status=200)
                 else:
                     return HttpResponse(status=200)
             else:
