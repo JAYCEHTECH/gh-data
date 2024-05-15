@@ -938,6 +938,10 @@ def paystack_webhook(request):
                 metadata = r_data.get('metadata')
                 receiver = metadata.get('receiver')
                 db_id = metadata.get('db_id')
+                referer = metadata.get('referrer')
+                if referer is not "https://www.ghdata.store/topup-info":
+                    print("invalid referrer")
+                    return HttpResponse(status=200)
                 print(db_id)
                 # offer = metadata.get('offer')
                 user = models.CustomUser.objects.get(id=int(db_id))
@@ -962,9 +966,13 @@ def paystack_webhook(request):
                     print("not within range")
                     return HttpResponse(200)
 
+
                 if channel == "topup":
                     try:
                         topup_amount = metadata.get('real_amount')
+
+                        if models.TopUpRequest.objects.filter(user=user, reference=reference).exists():
+                            return HttpResponse(status=200)
 
                         new_payment = models.Payment.objects.create(
                             user=user,
