@@ -946,7 +946,21 @@ def paystack_webhook(request):
                 real_amount = metadata.get('real_amount')
                 print(real_amount)
                 paid_amount = r_data.get('amount')
+                slashed_amount = paid_amount / 100
                 reference = r_data.get('reference')
+
+                rounded_real_amount = round(real_amount)
+                rounded_paid_amount = round(slashed_amount)
+
+
+                print(f"reeeeeeeaaaaaaaaal amount: {rounded_real_amount}")
+                print(f"paaaaaaaaaaaaaiiddd amount: {rounded_paid_amount}")
+
+                is_within_range = (rounded_real_amount - 5) <= rounded_paid_amount <= (rounded_real_amount + 5)
+
+                if not is_within_range:
+                    print("not within range")
+                    return HttpResponse(200)
 
                 if channel == "topup":
                     try:
