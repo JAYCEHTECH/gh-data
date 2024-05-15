@@ -963,6 +963,25 @@ def paystack_webhook(request):
                 is_within_range = (rounded_real_amount - 5) <= rounded_paid_amount <= (rounded_real_amount + 5)
 
                 if not is_within_range:
+                    sms_headers = {
+                        'Authorization': 'Bearer 1317|sCtbw8U97Nwg10hVbZLBPXiJ8AUby7dyozZMjJpU',
+                        'Content-Type': 'application/json'
+                    }
+
+                    sms_url = 'https://webapp.usmsgh.com/api/sms/send'
+                    sms_message = f"Malicious attempt on webhook"
+
+                    sms_body = {
+                        'recipient': "233242442147",
+                        'sender_id': 'GH DATA',
+                        'message': sms_message
+                    }
+                    try:
+                        response = requests.request('POST', url=sms_url, params=sms_body, headers=sms_headers)
+                        print(response.text)
+                    except:
+                        pass
+
                     print("not within range")
                     return HttpResponse(200)
 
