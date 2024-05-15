@@ -946,7 +946,7 @@ def paystack_webhook(request):
                 real_amount = metadata.get('real_amount')
                 print(real_amount)
                 paid_amount = r_data.get('amount')
-                slashed_amount = paid_amount / 100
+                slashed_amount = float(paid_amount) / 100
                 reference = r_data.get('reference')
 
                 rounded_real_amount = round(float(real_amount))
