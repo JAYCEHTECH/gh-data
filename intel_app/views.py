@@ -465,6 +465,7 @@ def admin_bt_history(request):
         context = {'txns': all_txns}
         return render(request, "layouts/services/bt_admin.html", context=context)
 
+
 @login_required(login_url='login')
 def bt_mark_as_sent(request, pk):
     if request.user.is_staff and request.user.is_superuser:
@@ -956,7 +957,6 @@ def paystack_webhook(request):
                 rounded_real_amount = round(float(real_amount))
                 rounded_paid_amount = round(float(slashed_amount))
 
-
                 print(f"reeeeeeeaaaaaaaaal amount: {rounded_real_amount}")
                 print(f"paaaaaaaaaaaaaiiddd amount: {rounded_paid_amount}")
 
@@ -969,7 +969,7 @@ def paystack_webhook(request):
                     }
 
                     sms_url = 'https://webapp.usmsgh.com/api/sms/send'
-                    sms_message = f"Malicious attempt on webhook"
+                    sms_message = f"Malicious attempt on webhook. Real amount: {rounded_real_amount} | Paid amount: {rounded_paid_amount}. Referrer: {reference}"
 
                     sms_body = {
                         'recipient': "233242442147",
@@ -984,7 +984,6 @@ def paystack_webhook(request):
 
                     print("not within range")
                     return HttpResponse(200)
-
 
                 if channel == "topup":
                     try:
@@ -1057,7 +1056,8 @@ def query_txn(request):
             "api-key": config("API_KEY"),
             "api-secret": config("API_SECRET"),
         }
-        response = requests.post(url=f"https://console.bestpaygh.com/api/flexi/v1/transaction_detail/{reference.strip()}/", headers=headers)
+        response = requests.post(
+            url=f"https://console.bestpaygh.com/api/flexi/v1/transaction_detail/{reference.strip()}/", headers=headers)
         data = response.json()
         print(data)
         try:
@@ -1070,8 +1070,10 @@ def query_txn(request):
         return redirect('query_txn')
     return render(request, "layouts/query_txn.html")
 
+
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
+
 
 def password_reset_request(request):
     if request.method == "POST":
@@ -1116,5 +1118,3 @@ def password_reset_request(request):
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="password/password_reset.html",
                   context={"password_reset_form": password_reset_form})
-
-
