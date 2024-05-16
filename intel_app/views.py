@@ -34,6 +34,7 @@ def services(request):
     return render(request, "layouts/services.html")
 
 
+@login_required(login_url='login')
 def pay_with_wallet(request):
     if request.method == "POST":
         admin = models.AdminInfo.objects.filter().first().phone_number
@@ -239,6 +240,7 @@ def airtel_tigo(request):
     return render(request, "layouts/services/at.html", context=context)
 
 
+@login_required(login_url='login')
 def mtn_pay_with_wallet(request):
     if request.method == "POST":
         user = models.CustomUser.objects.get(id=request.user.id)
