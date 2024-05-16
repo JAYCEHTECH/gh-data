@@ -940,6 +940,7 @@ def paystack_webhook(request):
                 receiver = metadata.get('receiver')
                 db_id = metadata.get('db_id')
                 referer = metadata.get('referrer')
+                print(referer)
                 if referer != "https://www.ghdata.store/topup-info":
                     print("invalid referrer")
                     return HttpResponse(status=200)
