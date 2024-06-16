@@ -656,7 +656,7 @@ def mark_as_sent(request, pk):
         }
         response = requests.request('POST', url=sms_url, params=sms_body, headers=sms_headers)
         print(response.text)
-        return redirect('mtn_admin')
+        return redirect('mtn_admin', status="Pending")
 
 
 def credit_user(request):
