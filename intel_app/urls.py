@@ -23,7 +23,6 @@ urlpatterns = [
                   path('bt_mark_as_sent/<int:pk>', views.bt_mark_as_sent, name='bt_mark_as_sent'),
                   path('big_time_pay_with_wallet/', views.big_time_pay_with_wallet, name='big_time_pay_with_wallet'),
 
-                  path('mtn_admin', views.admin_mtn_history, name='mtn_admin'),
                   path('afa_admin', views.admin_afa_history, name='afa_admin'),
                   path('voda_admin', views.admin_voda_history, name='voda_admin'),
 
