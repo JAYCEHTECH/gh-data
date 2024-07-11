@@ -78,8 +78,8 @@ def pay_with_wallet(request):
                 user.wallet -= float(amount)
                 user.wallet = round(user.wallet, 2)
                 user.save()
-                receiver_message = f"Your bundle purchase has been completed successfully. {bundle}MB has been credited to you by {request.user.phone}.\nReference: {reference}\n"
-                sms_message = f"Hello @{request.user.username}. Your bundle purchase has been completed successfully. {bundle}MB has been credited to {phone_number}.\nReference: {reference}\nCurrent Wallet Balance: {user.wallet}\nThank you for using GH Data.\n\nGH Data"
+                receiver_message = f"{bundle}MB has been credited to you by {request.user.phone}.\nReference: {reference}\n"
+                sms_message = f"{bundle}MB has been credited to {phone_number}.\nReference: {reference}\nCurrent Wallet Balance: {user.wallet}\nThank you for using GH Data.\n\nGH Data"
 
                 num_without_0 = phone_number[1:]
                 print(num_without_0)
@@ -177,8 +177,8 @@ def airtel_tigo(request):
                 transaction_to_be_updated.save()
                 print(request.user.phone)
                 print("***********")
-                receiver_message = f"Your bundle purchase has been completed successfully. {bundle}MB has been credited to you by {request.user.phone}.\nReference: {payment_reference}\n"
-                sms_message = f"Hello @{request.user.username}. Your bundle purchase has been completed successfully. {bundle}MB has been credited to {phone_number}.\nReference: {payment_reference}\nThank you for using GH Data.\n\nGH Data"
+                receiver_message = f"{bundle}MB has been credited to you by {request.user.phone}.\nReference: {payment_reference}\n"
+                sms_message = f"{bundle}MB has been credited to {phone_number}.\nReference: {payment_reference}\nThank you for using GH Data.\n\nGH Data"
 
                 num_without_0 = phone_number[1:]
                 print(num_without_0)
@@ -538,7 +538,7 @@ def change_excel_status(request, status, to_change_to):
                 }
 
                 sms_url = 'https://webapp.usmsgh.com/api/sms/send'
-                sms_message = f"Your MTN transaction has been completed. {transaction.bundle_number} has been credited with {transaction.offer}.\nTransaction Reference: {transaction.reference}"
+                sms_message = f"{transaction.bundle_number} has been credited with {transaction.offer}.\nTransaction Reference: {transaction.reference}"
 
                 sms_body = {
                     'recipient': f"233{transaction_number}",
@@ -880,7 +880,7 @@ def afa_mark_as_sent(request, pk):
         }
 
         sms_url = 'https://webapp.usmsgh.com/api/sms/send'
-        sms_message = f"Your AFA Registration has been completed. {txn.phone_number} has been registered.\nTransaction Reference: {txn.reference}"
+        sms_message = f"AFA Registration.{txn.phone_number} has been registered.\nTransaction Reference: {txn.reference}"
 
         sms_body = {
             'recipient': f"233{txn.user.phone}",
@@ -906,7 +906,7 @@ def voda_mark_as_sent(request, pk):
         }
 
         sms_url = 'https://webapp.usmsgh.com/api/sms/send'
-        sms_message = f"Your Vodafone transaction has been completed. {txn.bundle_number} has been credited with {txn.offer}.\nTransaction Reference: {txn.reference}"
+        sms_message = f"{txn.bundle_number} has been credited with {txn.offer}.\nTransaction Reference: {txn.reference}"
 
         sms_body = {
             'recipient': f"233{txn.user.phone}",

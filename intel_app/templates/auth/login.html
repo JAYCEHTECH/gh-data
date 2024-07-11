@@ -30,7 +30,7 @@
       <div class="card-body py-5 px-md-5">
   
         <div class="row d-flex justify-content-center">
-          <div class="col-lg-8">
+          <div class="col-lg-8 justify-content-center text-center">
             <h2 class="fw-bold mb-5">Log in</h2>
             <form method="post">
                 {% csrf_token %}
@@ -51,13 +51,13 @@
               </div>
             </div>
 
-                <a href="{% url 'password_reset' %}">Forgot Password? Click here</a>
-  
+
+              <a class="text-center" href="{% url 'signup' %}">Don't have an account. Click here</a>
               <!-- Submit button -->
               <button type="submit" class="btn btn-primary btn-block mb-4">
                 Log in
               </button>
-  
+              <a class="text-center" href="{% url 'password_reset' %}">Forgot Password? Click here</a>
             </form>
           </div>
         </div>
